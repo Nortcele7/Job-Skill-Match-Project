@@ -1,0 +1,573 @@
+// ============================================================
+// ai.form.scss — 3-Panel Interview UI
+// Left Nav | Main Content | Right Score Sidebar
+// ============================================================
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;400;500;600;700&display=swap');
+
+// ── Tokens ───────────────────────────────────────────────────
+$navy:          #0b0f1c;
+$navy-mid:      #10162a;
+$navy-card:     #161e32;
+$navy-card2:    #1c2540;
+$navy-border:   #222d45;
+$navy-border2:  #2a3856;
+
+$purple:        #7c3aed;
+$purple-soft:   #8b5cf6;
+$purple-glow:   rgba(124, 58, 237, .20);
+$purple-dim:    rgba(124, 58, 237, .08);
+$lavender:      #a78bfa;
+$lavender-dim:  rgba(167, 139, 250, .12);
+
+$frost:         #e8e4ff;
+$frost-mid:     #b0abcf;
+$frost-dim:     #6b6888;
+
+$success:       #22c55e;
+$warning:       #f59e0b;
+$danger:        #ef4444;
+
+$radius-sm:     6px;
+$radius-md:     10px;
+$transition:    200ms cubic-bezier(.4, 0, .2, 1);
+
+@mixin tag-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { color-scheme: dark; }
+
+body {
+  background: $navy;
+  font-family: 'DM Sans', sans-serif;
+  color: $frost;
+}
+
+// ════════════════════════════════════════════════════════════
+// INPUT VIEW — before report exists
+// ════════════════════════════════════════════════════════════
+main.input-view {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: $navy;
+  background-image:
+    radial-gradient(ellipse at 30% 20%, rgba($purple, .10) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(#1e3a8a, .08) 0%, transparent 50%);
+  padding: 32px;
+}
+
+.form-container {
+  width: 100%;
+  max-width: 460px;
+
+  h1 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 2rem;
+    font-weight: 400;
+    color: $frost;
+    letter-spacing: -.025em;
+    line-height: 1.15;
+    margin-bottom: 6px;
+  }
+
+  .form-subtitle {
+    font-size: 13px;
+    color: $frost-dim;
+    font-weight: 300;
+    margin-bottom: 32px;
+  }
+
+  form { display: flex; flex-direction: column; gap: 20px; }
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+
+  label {
+    @include tag-label;
+    color: $lavender;
+    opacity: .85;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    width: 100%;
+    padding: 12px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: $frost;
+    background: $navy-card;
+    border: 1px solid $navy-border;
+    border-radius: $radius-sm;
+    outline: none;
+    transition: border-color $transition, box-shadow $transition;
+
+    &::placeholder { color: $frost-dim; opacity: .45; }
+    &:hover:not(:focus) { border-color: $navy-border2; }
+    &:focus {
+      border-color: $purple-soft;
+      box-shadow: 0 0 0 3px $purple-glow;
+    }
+  }
+
+  input[type="file"] {
+    width: 100%;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: $frost-dim;
+    background: $navy-card;
+    border: 1.5px dashed $navy-border2;
+    border-radius: $radius-sm;
+    padding: 20px 16px;
+    cursor: pointer;
+    transition: border-color $transition, background $transition, box-shadow $transition;
+
+    &:hover { border-color: $purple-soft; background: $purple-dim; }
+    &:focus { outline: none; border-color: $purple-soft; box-shadow: 0 0 0 3px $purple-glow; }
+
+    &::-webkit-file-upload-button {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: $frost;
+      background: $purple;
+      border: none;
+      border-radius: $radius-sm;
+      padding: 8px 14px;
+      margin-right: 14px;
+      cursor: pointer;
+      transition: background $transition;
+      &:hover { background: $purple-soft; }
+    }
+  }
+}
+
+.primary-button {
+  width: 100%;
+  padding: 14px 24px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: $frost;
+  background: linear-gradient(135deg, $purple 0%, $purple-soft 100%);
+  border: none;
+  border-radius: $radius-sm;
+  cursor: pointer;
+  margin-top: 8px;
+  box-shadow: 0 4px 20px $purple-glow;
+  transition: opacity $transition, transform $transition, box-shadow $transition;
+
+  &:hover:not(:disabled) {
+    opacity: .88;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba($purple, .45);
+  }
+  &:active:not(:disabled) { transform: scale(.98); }
+  &:disabled { opacity: .4; cursor: not-allowed; box-shadow: none; }
+}
+
+// ════════════════════════════════════════════════════════════
+// REPORT VIEW — 3-panel shell
+// ════════════════════════════════════════════════════════════
+.app-shell {
+  display: grid;
+  grid-template-columns: 210px 1fr 260px;
+  min-height: 100vh;
+  background: $navy;
+}
+
+// ── LEFT NAV ─────────────────────────────────────────────────
+.nav-panel {
+  background: $navy-mid;
+  border-right: 1px solid $navy-border;
+  padding: 36px 0;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+
+  .nav-label {
+    @include tag-label;
+    color: $frost-dim;
+    letter-spacing: .22em;
+    padding: 0 22px 20px;
+    border-bottom: 1px solid $navy-border;
+    margin-bottom: 16px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 22px;
+    font-size: 13.5px;
+    font-weight: 400;
+    color: $frost-mid;
+    cursor: pointer;
+    border-left: 2px solid transparent;
+    transition: background $transition, color $transition, border-color $transition;
+    text-decoration: none;
+    user-select: none;
+
+    .nav-icon {
+      font-size: 14px;
+      opacity: .55;
+      flex-shrink: 0;
+      transition: opacity $transition;
+    }
+
+    &:hover {
+      background: $purple-dim;
+      color: $frost;
+      .nav-icon { opacity: .9; }
+    }
+
+    &.active {
+      background: $lavender-dim;
+      color: $lavender;
+      border-left-color: $purple-soft;
+      font-weight: 500;
+      .nav-icon { opacity: 1; }
+    }
+  }
+}
+
+// ── MAIN CONTENT ─────────────────────────────────────────────
+.content-panel {
+  overflow-y: auto;
+  padding: 44px 48px;
+  background: $navy;
+}
+
+.content-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 30px;
+
+  h2 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: $frost;
+    letter-spacing: -.02em;
+  }
+
+  .question-count {
+    @include tag-label;
+    font-size: 11px;
+    color: $frost-dim;
+    background: $navy-card;
+    border: 1px solid $navy-border;
+    border-radius: 99px;
+    padding: 4px 14px;
+  }
+}
+
+// ── Question accordion ────────────────────────────────────────
+.question-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.question-card {
+  background: $navy-card;
+  border: 1px solid $navy-border;
+  border-radius: $radius-md;
+  overflow: hidden;
+  transition: border-color $transition;
+
+  &:hover { border-color: $navy-border2; }
+  &.open  { border-color: rgba($purple, .3); }
+}
+
+.question-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 24px;
+  cursor: pointer;
+
+  .q-num {
+    @include tag-label;
+    font-size: 9px;
+    color: $purple-soft;
+    background: $lavender-dim;
+    padding: 4px 9px;
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .q-text {
+    flex: 1;
+    font-size: 14.5px;
+    font-weight: 400;
+    color: $frost;
+    line-height: 1.6;
+    transition: color $transition;
+  }
+
+  .q-chevron {
+    flex-shrink: 0;
+    color: $frost-dim;
+    font-size: 18px;
+    margin-top: 2px;
+    transition: transform $transition;
+  }
+
+  &:hover .q-text { color: $lavender; }
+}
+
+.question-card.open .q-chevron { transform: rotate(180deg); }
+
+.question-body {
+  padding: 0 24px 22px;
+  border-top: 1px solid $navy-border;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  // Hide when not open — toggle with JS using .open class
+  // In React use conditional render instead
+}
+
+.answer-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  .block-tag {
+    @include tag-label;
+    font-size: 9px;
+    color: $lavender;
+    background: $lavender-dim;
+    padding: 3px 9px;
+    border-radius: 4px;
+    display: inline-block;
+    width: fit-content;
+  }
+
+  p {
+    font-size: 13.5px;
+    line-height: 1.75;
+    color: $frost-mid;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    li {
+      font-size: 13.5px;
+      color: $frost-mid;
+      line-height: 1.65;
+      padding: 10px 14px;
+      background: $purple-dim;
+      border: 1px solid $navy-border;
+      border-radius: $radius-sm;
+
+      &::before { content: '→ '; color: $purple-soft; }
+    }
+  }
+}
+
+// ── Loading / Error ───────────────────────────────────────────
+.loading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: $lavender;
+  font-size: 15px;
+  padding: 40px 0;
+
+  &::before {
+    content: '';
+    width: 22px;
+    height: 22px;
+    border: 2px solid rgba($purple, .25);
+    border-top-color: $purple-soft;
+    border-radius: 50%;
+    animation: spin .75s linear infinite;
+    flex-shrink: 0;
+  }
+}
+
+.error {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: rgba($danger, .08);
+  border: 1px solid rgba($danger, .2);
+  border-radius: $radius-sm;
+  color: $danger;
+  font-size: 14px;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+// ── RIGHT SCORE SIDEBAR ───────────────────────────────────────
+.score-panel {
+  background: $navy-mid;
+  border-left: 1px solid $navy-border;
+  padding: 36px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+// ── Score circle ──────────────────────────────────────────────
+.score-block {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  .score-heading {
+    @include tag-label;
+    color: $frost-dim;
+    letter-spacing: .2em;
+  }
+
+  .score-ring-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+
+    .ring-outer {
+      position: relative;
+      width: 110px;
+      height: 110px;
+
+      svg { transform: rotate(-90deg); }
+
+      .ring-text {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .ring-number {
+          font-family: 'DM Serif Display', Georgia, serif;
+          font-size: 1.85rem;
+          font-weight: 400;
+          color: $frost;
+          line-height: 1;
+        }
+
+        .ring-pct {
+          font-size: 11px;
+          color: $frost-dim;
+          font-weight: 500;
+          margin-top: 2px;
+        }
+      }
+    }
+
+    .ring-caption {
+      font-size: 12.5px;
+      color: $success;
+      font-weight: 500;
+    }
+  }
+}
+
+// ── Skill gaps sidebar ────────────────────────────────────────
+.skill-block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  .skill-heading {
+    @include tag-label;
+    color: $frost-dim;
+    letter-spacing: .2em;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .skill-tag {
+    font-size: 12.5px;
+    font-weight: 400;
+    color: $frost-mid;
+    background: $navy-card2;
+    border: 1px solid $navy-border2;
+    border-radius: $radius-sm;
+    padding: 10px 14px;
+    line-height: 1.4;
+    transition: border-color $transition, color $transition;
+    cursor: default;
+
+    &:hover { color: $lavender; border-color: rgba($purple, .4); }
+
+    &.high   { border-left: 3px solid $danger; }
+    &.medium { border-left: 3px solid $warning; }
+    &.low    { border-left: 3px solid $success; }
+  }
+}
+
+// ── Animations ───────────────────────────────────────────────
+@keyframes rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.content-header,
+.question-list { animation: rise .4s cubic-bezier(.22, 1, .36, 1) both; }
+
+// ── Scrollbar ────────────────────────────────────────────────
+::-webkit-scrollbar       { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: $navy-border; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: rgba($purple, .5); }
+
+// ── Responsive ───────────────────────────────────────────────
+@media (max-width: 960px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  .nav-panel   { display: none; }
+  .score-panel {
+    border-left: none;
+    border-top: 1px solid $navy-border;
+    position: static;
+    height: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  .content-panel { padding: 24px 20px; }
+}
