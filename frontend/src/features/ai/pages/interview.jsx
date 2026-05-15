@@ -82,9 +82,9 @@ import "../../ai/ai.form.scss";
 import { interviewPreparation } from "../services/interview.api";
 
 const NAV_SECTIONS = [
-  { id: "technical",    label: "Technical Questions", icon: "</>"},
+  { id: "technical",    label: "Technical Questions", icon: "⚙️"},
   { id: "behavioural",  label: "Behavioral Questions", icon: "◎" },
-  { id: "roadmap",      label: "Road Map",              icon: "↗" },
+  { id: "roadmap",      label: "Roadmap",              icon: "↗" },
 ];
 
 const Interview = () => {
@@ -189,7 +189,7 @@ const Interview = () => {
   const sectionLabel = {
     technical:   "Technical Questions",
     behavioural: "Behavioral Questions",
-    roadmap:     "Road Map",
+    roadmap:     "Roadmap",
   };
 
   const currentItems = sectionMap[activeSection] ?? [];
@@ -218,7 +218,6 @@ const Interview = () => {
 
         <div className="content-header">
           <h2>{sectionLabel[activeSection]}</h2>
-          <span className="question-count">{currentItems.length} items</span>
         </div>
 
         {activeSection === "roadmap" ? (
@@ -283,7 +282,7 @@ const Interview = () => {
               <svg width="110" height="110" viewBox="0 0 110 110">
                 <defs>
                   <linearGradient id="scoreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#7c3aed" />
+                    <stop offset="0%" stopColor="#ed903a" />
                     <stop offset="100%" stopColor="#a78bfa" />
                   </linearGradient>
                 </defs>
