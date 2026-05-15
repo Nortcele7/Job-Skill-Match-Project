@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
             catch (error) {
                 console.log(error);
 
-                // When the user is not logged in 
+                // When the user is not logged in
                 setUser(null);
             } 
             finally {

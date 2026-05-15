@@ -1,168 +1,232 @@
-main {
-  min-height: 100vh;
-  width: 100%;
+// ============================================================
+// auth.form.scss — Editorial / Refined Monochrome Auth Styles
+// ============================================================
 
-  background: linear-gradient(
-    135deg,
-    #8100d1,
-    #b500b2,
-    #ff52a0,
-    #ffa47f
-  );
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;400;500&display=swap');
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+// ── Variables ────────────────────────────────────────────────
+$ink:        #0e0e0e;
+$paper:      #f5f2ee;
+$accent:     #c8491a;
+$muted:      #8a8480;
+$border:     #d8d3cc;
+$surface:    #ffffff;
+$shadow-sm:  0 2px 8px rgba(0,0,0,.07);
+$shadow-md:  0 8px 32px rgba(0,0,0,.10);
+$radius:     4px;
+$transition: 200ms cubic-bezier(.4, 0, .2, 1);
 
-  position: relative;
-
-  .form-container {
-    width: 400px;
-
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(15px);
-
-    padding: 2.5rem;
-    border-radius: 24px;
-
-    border: 1px solid rgba(255, 255, 255, 0.2);
-
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
-
-    h1 {
-      text-align: center;
-      margin-bottom: 2rem;
-
-      font-size: 2.2rem;
-      font-weight: 700;
-
-      color: white;
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-
-      .input-group {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-
-        label {
-          font-size: 0.95rem;
-          font-weight: 600;
-          color: white;
-        }
-
-        input {
-          padding: 1rem;
-          border: none;
-
-          border-radius: 12px;
-
-          background: rgba(255, 255, 255, 0.18);
-          color: white;
-
-          font-size: 1rem;
-
-          outline: none;
-
-          transition: 0.3s ease;
-
-          &::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-          }
-
-          &:focus {
-            background: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.15);
-          }
-        }
-      }
-
-      /* BUTTON BASE */
-      .button {
-        padding: 1rem;
-        border: none;
-        border-radius: 12px;
-
-        font-size: 1rem;
-        font-weight: 700;
-
-        cursor: pointer;
-
-        transition: all 0.3s ease;
-
-        letter-spacing: 0.5px;
-      }
-
-      /* PRIMARY BUTTON */
-      .primary-button {
-        background: linear-gradient(135deg, #ffffff, #ffe5f2);
-        color: #8100d1;
-
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-
-        &:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-        }
-
-        &:active {
-          transform: translateY(0px);
-        }
-
-        &:disabled {
-          opacity: 0.6;
-          cursor: not-allowed;
-          transform: none;
-        }
-      }
-    }
-  }
+// ── Reset / Base ─────────────────────────────────────────────
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-/* ===========================
-   FULL PAGE LOADER
-=========================== */
-
+// ── Full-page loader ─────────────────────────────────────────
 .full-page-loader {
-  position: fixed;
-  top: 0;
-  left: 0;
-
-  height: 100vh;
-  width: 100vw;
-
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 16px;
+  height: 100vh;
+  background: $paper;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: $muted;
 
-  background: rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(8px);
-
-  z-index: 9999;
-}
-
-/* SPINNER */
-.spinner {
-  width: 60px;
-  height: 60px;
-
-  border: 5px solid rgba(255, 255, 255, 0.3);
-  border-top: 5px solid white;
-
-  border-radius: 50%;
-
-  animation: spin 1s linear infinite;
+  .spinner {
+    width: 28px;
+    height: 28px;
+    border: 2px solid $border;
+    border-top-color: $accent;
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+  }
 }
 
 @keyframes spin {
-  0% {
-    transform: rotate(0deg);
+  to { transform: rotate(360deg); }
+}
+
+// ── Main layout ──────────────────────────────────────────────
+main {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background-color: $paper;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba($border, .45) 39px,
+      rgba($border, .45) 40px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 39px,
+      rgba($border, .45) 39px,
+      rgba($border, .45) 40px
+    );
+  padding: 24px;
+  font-family: 'DM Sans', sans-serif;
+}
+
+// ── Form container ───────────────────────────────────────────
+.form-container {
+  width: 100%;
+  max-width: 420px;
+  background: $surface;
+  border: 1px solid $border;
+  border-radius: $radius;
+  padding: 48px 40px 44px;
+  box-shadow: $shadow-md;
+  animation: rise .45s cubic-bezier(.22, 1, .36, 1) both;
+
+  h1 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 2rem;
+    font-weight: 400;
+    color: $ink;
+    letter-spacing: -.01em;
+    margin-bottom: 32px;
+    line-height: 1.1;
+
+    // thin rule below heading
+    padding-bottom: 20px;
+    border-bottom: 1px solid $border;
   }
-  100% {
-    transform: rotate(360deg);
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ── Input group ──────────────────────────────────────────────
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: $muted;
+  }
+
+  input {
+    width: 100%;
+    padding: 11px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: $ink;
+    background: $surface;
+    border: 1px solid $border;
+    border-radius: $radius;
+    outline: none;
+    transition: border-color $transition, box-shadow $transition;
+
+    &::placeholder {
+      color: lighten($muted, 18%);
+    }
+
+    &:focus {
+      border-color: $ink;
+      box-shadow: 0 0 0 3px rgba($ink, .06);
+    }
+
+    &:hover:not(:focus) {
+      border-color: darken($border, 12%);
+    }
+  }
+}
+
+// ── Buttons ──────────────────────────────────────────────────
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: $radius;
+  cursor: pointer;
+  transition: background $transition, transform $transition, box-shadow $transition;
+
+  &:active {
+    transform: scale(.98);
+  }
+}
+
+.primary-button {
+  width: 100%;
+  background: $ink;
+  color: $surface;
+  box-shadow: $shadow-sm;
+  margin-top: 4px;
+
+  &:hover {
+    background: $accent;
+    box-shadow: 0 4px 16px rgba($accent, .30);
+  }
+
+  &:active {
+    background: darken($accent, 8%);
+  }
+}
+
+// ── Footer link row (Register page) ─────────────────────────
+.form-container form > div:last-child {
+  font-size: 13px;
+  color: $muted;
+  text-align: center;
+  padding-top: 4px;
+
+  a {
+    color: $ink;
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid $border;
+    transition: border-color $transition, color $transition;
+
+    &:hover {
+      color: $accent;
+      border-color: $accent;
+    }
+  }
+}
+
+// ── Responsive ───────────────────────────────────────────────
+@media (max-width: 480px) {
+  .form-container {
+    padding: 36px 24px 32px;
   }
 }
