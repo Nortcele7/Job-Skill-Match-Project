@@ -11,6 +11,9 @@ async function generateInterviewReportController(req, res)
     To handle the pdf or any other kind of files we need multer
     */
 
+    console.log(req.file)
+    console.log(req.body)
+
     const pdfData = await (new pdfParse.PDFParse(Uint8Array.from(req.file.buffer))).getText()
     const resumeContent = pdfData.text
 
@@ -22,13 +25,21 @@ async function generateInterviewReportController(req, res)
         jobDescription
     })
 
-    const interviewReport = await interviewReportModel.create({
-        user:req.user.id,
-        resume: resumeContent,
-        selfDescription,
-        jobDescription,
-        ...interviewReportByAI  // destructure bhayesi hami lai chaini format ma aaucha as we have generated in the same format
-    })
+    const interviewReport = await interviewReportModel.findOneAndUpdate(
+      { user: req.user.id },
+      {
+        $set: {
+          resume: resumeContent,
+          selfDescription,
+          jobDescription,
+          ...interviewReportByAI
+        }
+      },
+      {
+        new: true,
+        upsert: true
+      }
+    )
 
     res.status(201).json({
         message:"Interview Report generated successfully",
