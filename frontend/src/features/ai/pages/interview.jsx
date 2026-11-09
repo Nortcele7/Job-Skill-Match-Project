@@ -1,82 +1,3 @@
-// import React, { useState } from 'react'
-// import "../../ai/ai.form.scss"
-// import { interviewPreparation } from '../services/interview.api'
-
-// const Interview = () => {
-
-//     const [jobDescription, setJobDescription] = useState("")
-//     const [selfDescription, setSelfDescription] = useState("")
-//     const [resume, setResume] = useState(null)
-
-//     const [report, setReport] = useState(null);
-//     const [loading, setLoading] = useState(false);
-//     const [error, setError] = useState(null);
-
-
-//     const handleSubmit = async (e) => {
-//   e.preventDefault();
-
-//   try {
-//     setLoading(true);
-//     setError(null);
-
-//     const res = await interviewPreparation({
-//       jobDescription,
-//       resume,
-//       selfDescription
-//     });
-
-//     setReport(res.interviewReport);
-
-//   } catch (err) {
-//     setError("Failed to generate report");
-//     console.log(err);
-//   } finally {
-//     setLoading(false);
-//   }
-// };
-
-
-
-
-
-
-
-//   return (
-//     <main>
-//     <div className='form-container'>
-//     <form onSubmit={handleSubmit} encType="multipart/form-data">
-
-//         <div id="input-class">
-//             Job Description: <input type="text" id="jobDescription" placeholder='Enter the job decription'
-//             onChange={(e)=>{setJobDescription(e.target.value)}}
-//         />
-//         </div>
-
-//         <div id="input-class">
-//             Resume: <input type="file" name="resume" 
-//             onChange={(e)=>{setResume(e.target.files[0])}}    
-//         />
-//         </div>
-
-//         <div id="input-class">
-//             Self Description: <input type="text" id="selfDescription" placeholder='Enter the self decription'
-//             onChange={(e)=>{setSelfDescription(e.target.value)}}    
-//         />
-//         </div> 
-
-//         <button type='submit'>Get Information</button>
-
-
-//     </form>
-//     </div>
-//     </main>
-//   )
-// }
-
-// export default Interview
-
-
 import React, { useState } from "react";
 import "../../ai/ai.form.scss";
 import { interviewPreparation } from "../services/interview.api";
@@ -121,30 +42,38 @@ const Interview = () => {
     return (
       <main className="input-view">
         <div className="form-container">
-          <h1>AI Interview Prep</h1>
-          <p className="form-subtitle">Generate a personalised report in seconds</p>
+          <div className="form-heading">
+            <span className="product-kicker">Skill Score</span>
+            <h1>Prepare with purpose.</h1>
+            <p className="form-subtitle">
+              Share the role, your experience, and your resume. Skill Score will build a focused interview plan for you.
+            </p>
+          </div>
 
           <form onSubmit={handleSubmit} encType="multipart/form-data">
             <div className="input-group">
               <label htmlFor="jd">Job Description</label>
-              <input id="jd" type="text" placeholder="Paste the job description"
+              <span className="field-hint">Include the responsibilities, requirements, and skills from the role.</span>
+              <textarea id="jd" rows="8" placeholder="Paste the full job description here"
                 value={jobDescription} onChange={(e) => setJobDescription(e.target.value)} />
             </div>
 
             <div className="input-group">
-              <label htmlFor="resume">Resume (PDF)</label>
-              <input id="resume" type="file"
+              <label htmlFor="resume">Resume</label>
+              <span className="field-hint">Upload a PDF so we can match your experience to the role.</span>
+              <input id="resume" type="file" accept=".pdf,application/pdf"
                 onChange={(e) => setResume(e.target.files[0])} />
             </div>
 
             <div className="input-group">
-              <label htmlFor="sd">Self Description</label>
-              <input id="sd" type="text" placeholder="Briefly describe yourself"
+              <label htmlFor="sd">Brief Description</label>
+              <span className="field-hint">Tell us about your strengths, goals, and experience in your own words.</span>
+              <textarea id="sd" rows="7" placeholder="Write a brief description about your background and career goals"
                 value={selfDescription} onChange={(e) => setSelfDescription(e.target.value)} />
             </div>
 
             <button type="submit" className="primary-button" disabled={loading}>
-              {loading ? "Generating…" : "Get Report"}
+              {loading ? "Generating…" : "Generate my Skill Score"}
             </button>
           </form>
 
@@ -282,11 +211,11 @@ const Interview = () => {
               <svg width="110" height="110" viewBox="0 0 110 110">
                 <defs>
                   <linearGradient id="scoreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#ed903a" />
-                    <stop offset="100%" stopColor="#a78bfa" />
+                    <stop offset="0%" stopColor="#840032" />
+                    <stop offset="100%" stopColor="#e59500" />
                   </linearGradient>
                 </defs>
-                <circle cx="55" cy="55" r="46" fill="none" stroke="#1f2d47" strokeWidth="8" />
+                <circle cx="55" cy="55" r="46" fill="none" stroke="#31566d" strokeWidth="8" />
                 <circle cx="55" cy="55" r="46" fill="none"
                   stroke="url(#scoreGrad)" strokeWidth="8"
                   strokeLinecap="round"

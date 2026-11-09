@@ -3,30 +3,28 @@
 // Left Nav | Main Content | Right Score Sidebar
 // ============================================================
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;400;500;600;700&display=swap');
-
 // ── Tokens ───────────────────────────────────────────────────
-$navy:          #0b0f1c;
-$navy-mid:      #10162a;
-$navy-card:     #161e32;
-$navy-card2:    #1c2540;
-$navy-border:   #222d45;
-$navy-border2:  #2a3856;
+$navy:          #f8f7fc;
+$navy-mid:      #ffffff;
+$navy-card:     #f8f6fc;
+$navy-card2:    #f0edfa;
+$navy-border:   #e6e0f0;
+$navy-border2:  #cfc5e4;
 
-$purple:        #7c3aed;
-$purple-soft:   #8b5cf6;
-$purple-glow:   rgba(124, 58, 237, .20);
-$purple-dim:    rgba(124, 58, 237, .08);
-$lavender:      #a78bfa;
-$lavender-dim:  rgba(167, 139, 250, .12);
+$purple:        #6d28d9;
+$purple-soft:   #a78bfa;
+$purple-glow:   rgba(109, 40, 217, .18);
+$purple-dim:    rgba(109, 40, 217, .08);
+$lavender:      #6d28d9;
+$lavender-dim:  rgba(167, 139, 250, .18);
 
-$frost:         #e8e4ff;
-$frost-mid:     #b0abcf;
-$frost-dim:     #6b6888;
+$frost:         #27213b;
+$frost-mid:     #5f5870;
+$frost-dim:     #787086;
 
-$success:       #22c55e;
-$warning:       #f59e0b;
-$danger:        #ef4444;
+$success:       #6d28d9;
+$warning:       #a16207;
+$danger:        #b42318;
 
 $radius-sm:     6px;
 $radius-md:     10px;
@@ -36,15 +34,14 @@ $transition:    200ms cubic-bezier(.4, 0, .2, 1);
   font-size: 10px;
   font-weight: 700;
   letter-spacing: .14em;
-  text-transform: uppercase;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root { color-scheme: dark; }
+:root { color-scheme: light; }
 
 body {
   background: $navy;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Sora', sans-serif;
   color: $frost;
 }
 
@@ -52,58 +49,121 @@ body {
 // INPUT VIEW — before report exists
 // ════════════════════════════════════════════════════════════
 main.input-view {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
   min-height: 100vh;
   background: $navy;
   background-image:
-    radial-gradient(ellipse at 30% 20%, rgba($purple, .10) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 80%, rgba(#1e3a8a, .08) 0%, transparent 50%);
-  padding: 32px;
+    radial-gradient(ellipse at 12% 10%, rgba($purple-soft, .25) 0%, transparent 38%),
+    radial-gradient(ellipse at 88% 90%, rgba($purple, .1) 0%, transparent 34%);
+  padding: clamp(32px, 6vw, 88px) clamp(20px, 8vw, 140px);
 }
 
 .form-container {
   width: 100%;
-  max-width: 460px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: clamp(30px, 5vw, 64px);
+  background: $navy-mid;
+  border: 1px solid $navy-border;
+  border-radius: 18px;
+  box-shadow: 0 28px 70px rgba(54, 38, 91, .12);
 
   h1 {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: 2rem;
-    font-weight: 400;
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(1.6rem, 3vw, 2.25rem);
+    font-weight: 600;
     color: $frost;
     letter-spacing: -.025em;
-    line-height: 1.15;
-    margin-bottom: 6px;
+    line-height: 1;
+    margin-bottom: 14px;
+  }
+
+  .form-heading {
+    max-width: 760px;
+    margin-bottom: 48px;
+  }
+
+  .product-kicker {
+    @include tag-label;
+    display: block;
+    text-align: center;
+    color: $purple;
+    margin-bottom: 22px;
+    font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: .08em;
+    line-height: 1.2;
   }
 
   .form-subtitle {
-    font-size: 13px;
-    color: $frost-dim;
-    font-weight: 300;
-    margin-bottom: 32px;
+    max-width: 65ch;
+    font-size: 15px;
+    color: $frost-mid;
+    font-weight: 400;
+    line-height: 1.7;
   }
 
-  form { display: flex; flex-direction: column; gap: 20px; }
+  form {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(280px, .7fr);
+    gap: 30px 42px;
+    align-items: start;
+  }
+
+  form .input-group:nth-child(1) {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  form .input-group:nth-child(2) {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
+  form .input-group:nth-child(3) {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  form .primary-button {
+    grid-column: 1 / -1;
+    max-width: 360px;
+  }
+}
+
+main.input-view .form-container {
+  color: $frost;
 }
 
 .input-group {
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 8px;
 
   label {
     @include tag-label;
-    color: $lavender;
-    opacity: .85;
+    color: $purple-soft;
+    opacity: 1;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: normal;
+    line-height: 1.3;
+  }
+
+  .field-hint {
+    color: $frost-mid;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 4px;
   }
 
   input[type="text"],
   input[type="email"],
-  input[type="password"] {
+  input[type="password"],
+  textarea {
     width: 100%;
     padding: 12px 16px;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Sora', sans-serif;
     font-size: 14px;
     font-weight: 300;
     color: $frost;
@@ -111,9 +171,11 @@ main.input-view {
     border: 1px solid $navy-border;
     border-radius: $radius-sm;
     outline: none;
+    resize: vertical;
+    line-height: 1.6;
     transition: border-color $transition, box-shadow $transition;
 
-    &::placeholder { color: $frost-dim; opacity: .45; }
+    &::placeholder { color: $frost-dim; opacity: 1; }
     &:hover:not(:focus) { border-color: $navy-border2; }
     &:focus {
       border-color: $purple-soft;
@@ -123,9 +185,9 @@ main.input-view {
 
   input[type="file"] {
     width: 100%;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Sora', sans-serif;
     font-size: 12px;
-    color: $frost-dim;
+    color: $frost-mid;
     background: $navy-card;
     border: 1.5px dashed $navy-border2;
     border-radius: $radius-sm;
@@ -137,7 +199,7 @@ main.input-view {
     &:focus { outline: none; border-color: $purple-soft; box-shadow: 0 0 0 3px $purple-glow; }
 
     &::-webkit-file-upload-button {
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Sora', sans-serif;
       font-size: 10px;
       font-weight: 700;
       letter-spacing: .1em;
@@ -150,7 +212,7 @@ main.input-view {
       margin-right: 14px;
       cursor: pointer;
       transition: background $transition;
-      &:hover { background: $purple-soft; }
+      &:hover { background: $purple-soft; color: $navy; }
     }
   }
 }
@@ -158,13 +220,13 @@ main.input-view {
 .primary-button {
   width: 100%;
   padding: 14px 24px;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Sora', sans-serif;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: .13em;
   text-transform: uppercase;
-  color: $frost;
-  background: linear-gradient(135deg, $purple 0%, $purple-soft 100%);
+  color: #ffffff;
+  background: linear-gradient(135deg, $purple 0%, #8b5cf6 100%);
   border: none;
   border-radius: $radius-sm;
   cursor: pointer;
@@ -206,7 +268,8 @@ main.input-view {
   .nav-label {
     @include tag-label;
     color: $frost-dim;
-    letter-spacing: .22em;
+    font-size: 30px;
+    font-family: 'Sora', sans-serif;
     padding: 0 22px 20px;
     border-bottom: 1px solid $navy-border;
     margin-bottom: 16px;
@@ -228,7 +291,7 @@ main.input-view {
 
     .nav-icon {
       font-size: 14px;
-      opacity: .55;
+      opacity: .9;
       flex-shrink: 0;
       transition: opacity $transition;
     }
@@ -241,7 +304,7 @@ main.input-view {
 
     &.active {
       background: $lavender-dim;
-      color: $lavender;
+      color: $purple;
       border-left-color: $purple-soft;
       font-weight: 500;
       .nav-icon { opacity: 1; }
@@ -263,7 +326,7 @@ main.input-view {
   margin-bottom: 30px;
 
   h2 {
-    font-family: 'DM Serif Display', Georgia, serif;
+    font-family: 'Sora', sans-serif;
     font-size: 1.6rem;
     font-weight: 400;
     color: $frost;
@@ -477,7 +540,7 @@ main.input-view {
         justify-content: center;
 
         .ring-number {
-          font-family: 'DM Serif Display', Georgia, serif;
+          font-family: 'Sora', sans-serif;
           font-size: 1.85rem;
           font-weight: 400;
           color: $frost;
@@ -570,4 +633,25 @@ main.input-view {
     gap: 24px;
   }
   .content-panel { padding: 24px 20px; }
+
+  main.input-view {
+    padding: 48px 24px;
+  }
+
+  .form-container form {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .form-container form .input-group:nth-child(1),
+  .form-container form .input-group:nth-child(2),
+  .form-container form .input-group:nth-child(3) {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .form-container form .primary-button {
+    grid-column: auto;
+    max-width: none;
+  }
 }
