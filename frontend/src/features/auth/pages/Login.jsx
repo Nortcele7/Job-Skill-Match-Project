@@ -34,11 +34,16 @@ const Login = () => {
 
 
   return (
-    <main>
+    <main className="auth-page">
         <div className="form-container">
-            <h1>Login</h1>
+        <div className="brand-mark" aria-label="Skill Score">
+            <span className="brand-mark-icon">✦</span>
+            <span>Skill Score</span>
+        </div>
+        <h1>Welcome back<span>.</span></h1>
+        <p className="form-intro">Pick up where you left off and get one step closer to your next opportunity.</p>
 
-            <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
 
             <div className="input-group">
                 <label htmlFor="email">Email</label>
@@ -55,7 +60,7 @@ const Login = () => {
             </div>
 
             <button type="submit" className='button primary-button'>
-                Login
+                Continue to Skill Score
             </button>   
 
             </form>

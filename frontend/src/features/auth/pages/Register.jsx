@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useAuth } from '../hooks/useAuth'
 import { useNavigate } from 'react-router'
+import "../../auth/auth.from.scss"
 
 const Register = () => {
 
@@ -22,9 +23,14 @@ const Register = () => {
 
   return (
 
-     <main>
+     <main className="auth-page">
         <div className="form-container">
-            <h1>Register</h1>
+            <div className="brand-mark" aria-label="Skill Score">
+                <span className="brand-mark-icon">✦</span>
+                <span>Skill Score</span>
+            </div>
+            <h1>Build your next move<span>.</span></h1>
+            <p className="form-intro">Create your free profile and turn your skills into your next big opportunity.</p>
 
             <form  onSubmit={handleSubmit}>
 
@@ -49,7 +55,7 @@ const Register = () => {
                 />
             </div>
 
-            <button type="submit" className='button primary-button' >Register</button>
+            <button type="submit" className='button primary-button' >Create my profile</button>
 
             <div>
                 Already a User. <a href="/login">Login</a>

@@ -1,232 +1,209 @@
-// ============================================================
-// auth.form.scss — Editorial / Refined Monochrome Auth Styles
-// ============================================================
+$ink: #27213b;
+$navy: #f8f7fc;
+$burgundy: #6d28d9;
+$burgundy-dark: #5521aa;
+$gold: #a78bfa;
+$cream: #ffffff;
+$muted: #6b6578;
+$line: #e6e0f0;
+$surface: #ffffff;
+$transition: 180ms ease;
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;400;500&display=swap');
-
-// ── Variables ────────────────────────────────────────────────
-$ink:        #0e0e0e;
-$paper:      #f5f2ee;
-$accent:     #c8491a;
-$muted:      #8a8480;
-$border:     #d8d3cc;
-$surface:    #ffffff;
-$shadow-sm:  0 2px 8px rgba(0,0,0,.07);
-$shadow-md:  0 8px 32px rgba(0,0,0,.10);
-$radius:     4px;
-$transition: 200ms cubic-bezier(.4, 0, .2, 1);
-
-// ── Reset / Base ─────────────────────────────────────────────
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-// ── Full-page loader ─────────────────────────────────────────
-.full-page-loader {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  height: 100vh;
-  background: $paper;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  color: $muted;
-
-  .spinner {
-    width: 28px;
-    height: 28px;
-    border: 2px solid $border;
-    border-top-color: $accent;
-    border-radius: 50%;
-    animation: spin .8s linear infinite;
-  }
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-// ── Main layout ──────────────────────────────────────────────
-main {
+.auth-page {
   min-height: 100vh;
   display: grid;
   place-items: center;
-  background-color: $paper;
-  background-image:
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 39px,
-      rgba($border, .45) 39px,
-      rgba($border, .45) 40px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 39px,
-      rgba($border, .45) 39px,
-      rgba($border, .45) 40px
-    );
-  padding: 24px;
-  font-family: 'DM Sans', sans-serif;
+  padding: 32px 20px;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 8% 10%, rgba($gold, .28), transparent 30%),
+    radial-gradient(circle at 92% 90%, rgba($burgundy, .12), transparent 26%),
+    $navy;
+  font-family: 'Sora', sans-serif;
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    top: -250px;
+    right: 12%;
+    border: 1px solid rgba($burgundy, .12);
+    border-radius: 50%;
+    box-shadow: 0 0 0 40px rgba($burgundy, .04), 0 0 0 80px rgba($burgundy, .025);
+  }
 }
 
-// ── Form container ───────────────────────────────────────────
-.form-container {
-  width: 100%;
-  max-width: 420px;
+.auth-page .form-container {
+  width: min(100%, 470px);
+  position: relative;
+  z-index: 1;
+  padding: 44px;
+  color: $ink;
   background: $surface;
-  border: 1px solid $border;
-  border-radius: $radius;
-  padding: 48px 40px 44px;
-  box-shadow: $shadow-md;
-  animation: rise .45s cubic-bezier(.22, 1, .36, 1) both;
+  border: 1px solid rgba($cream, .85);
+  border-radius: 24px;
+  box-shadow: 0 28px 80px rgba($ink, .5);
+  animation: auth-rise .45s ease both;
 
   h1 {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: 2rem;
-    font-weight: 400;
+    margin-top: 30px;
     color: $ink;
-    letter-spacing: -.01em;
-    margin-bottom: 32px;
-    line-height: 1.1;
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    font-weight: 600;
+    letter-spacing: -.055em;
+    line-height: 1.08;
 
-    // thin rule below heading
-    padding-bottom: 20px;
-    border-bottom: 1px solid $border;
-  }
-
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    span { color: $burgundy; }
   }
 }
 
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+.auth-page .brand-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: $ink;
+  font-family: 'Sora', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -.03em;
+
+  &-icon {
+    display: grid;
+    width: 32px;
+    height: 32px;
+    place-items: center;
+    color: $cream;
+    background: linear-gradient(135deg, $burgundy, $gold);
+    border-radius: 10px;
+    box-shadow: 0 8px 18px rgba($burgundy, .25);
   }
 }
 
-// ── Input group ──────────────────────────────────────────────
-.input-group {
+.auth-page .form-intro {
+  max-width: 36ch;
+  margin: 14px 0 32px;
+  color: $muted;
+  font-size: .9rem;
+  font-weight: 500;
+  line-height: 1.7;
+}
+
+.auth-page .form-container form {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 19px;
+}
+
+.auth-page .input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 
   label {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: $muted;
+    color: $ink;
+    font-size: .78rem;
+    font-weight: 800;
   }
 
   input {
     width: 100%;
-    padding: 11px 14px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 300;
+    padding: 14px 15px;
     color: $ink;
-    background: $surface;
-    border: 1px solid $border;
-    border-radius: $radius;
+    background: #f8f6fc;
+    border: 1px solid $line;
+    border-radius: 12px;
     outline: none;
-    transition: border-color $transition, box-shadow $transition;
+    font-size: .88rem;
+    transition: border-color $transition, box-shadow $transition, background $transition;
 
-    &::placeholder {
-      color: lighten($muted, 18%);
-    }
-
+    &::placeholder { color: #68757d; }
+    &:hover { border-color: #92898d; }
     &:focus {
-      border-color: $ink;
-      box-shadow: 0 0 0 3px rgba($ink, .06);
-    }
-
-    &:hover:not(:focus) {
-      border-color: darken($border, 12%);
+      background: $surface;
+      border-color: $burgundy;
+      box-shadow: 0 0 0 4px rgba($burgundy, .13);
     }
   }
 }
 
-// ── Buttons ──────────────────────────────────────────────────
-.button {
+.auth-page .button {
   display: inline-flex;
+  min-height: 52px;
   align-items: center;
   justify-content: center;
-  padding: 12px 24px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  border: none;
-  border-radius: $radius;
+  padding: 12px 20px;
+  border: 0;
+  border-radius: 12px;
   cursor: pointer;
-  transition: background $transition, transform $transition, box-shadow $transition;
+  font-size: .84rem;
+  font-weight: 800;
+  transition: transform $transition, box-shadow $transition, background $transition;
 
-  &:active {
-    transform: scale(.98);
-  }
+  &:active { transform: translateY(1px); }
 }
 
-.primary-button {
+.auth-page .primary-button {
   width: 100%;
-  background: $ink;
-  color: $surface;
-  box-shadow: $shadow-sm;
-  margin-top: 4px;
+  margin-top: 6px;
+  color: $cream;
+  background: $burgundy;
+  box-shadow: 0 12px 24px rgba($burgundy, .22);
 
   &:hover {
-    background: $accent;
-    box-shadow: 0 4px 16px rgba($accent, .30);
-  }
-
-  &:active {
-    background: darken($accent, 8%);
+    background: $burgundy-dark;
+    box-shadow: 0 15px 28px rgba($burgundy, .3);
+    transform: translateY(-1px);
   }
 }
 
-// ── Footer link row (Register page) ─────────────────────────
-.form-container form > div:last-child {
-  font-size: 13px;
+.auth-page .form-container form > div:last-child {
+  padding-top: 5px;
   color: $muted;
+  font-size: .82rem;
+  font-weight: 600;
   text-align: center;
-  padding-top: 4px;
 
   a {
-    color: $ink;
-    font-weight: 500;
+    color: $burgundy;
+    font-weight: 800;
     text-decoration: none;
-    border-bottom: 1px solid $border;
-    transition: border-color $transition, color $transition;
-
-    &:hover {
-      color: $accent;
-      border-color: $accent;
-    }
+    &:hover { text-decoration: underline; }
   }
 }
 
-// ── Responsive ───────────────────────────────────────────────
-@media (max-width: 480px) {
-  .form-container {
-    padding: 36px 24px 32px;
+.full-page-loader {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  gap: 14px;
+  color: $cream;
+  background: $navy;
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+}
+
+.auth-page .spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid rgba($burgundy, .16);
+  border-top-color: $gold;
+  border-radius: 50%;
+  animation: auth-spin .8s linear infinite;
+}
+
+@keyframes auth-spin { to { transform: rotate(360deg); } }
+@keyframes auth-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 520px) {
+  .auth-page { padding: 20px 14px; }
+  .auth-page .form-container {
+    padding: 30px 24px;
+    border-radius: 20px;
   }
 }
